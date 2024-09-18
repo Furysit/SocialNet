@@ -91,20 +91,20 @@ body * {
     min-height: 100vh; /* Минимальная высота контейнера */
 }
 
+
+.btn-warning{
+    width: 90px;
+    height: 45px;
+    margin: 0 auto;
+    display: block;
+    margin-bottom: 10px;
+}
 .news{
     border: solid, 1px;
     border-radius: 20px;
 }
 
-#messages {
-    height: 400px;
-    width: 300px;
-    background: transparent;
-    overflow: auto; /* Чтобы добавить полосу прокрутки при переполнении */
-    word-wrap: break-word; /* Разрыв длинных слов на новые строки */
-    border: 1px solid #ccc; /* Добавляем рамку для наглядности */
-    padding: 10px;
-}
+
 
 .novost_img{
     width: 190px;
@@ -229,4 +229,19 @@ body * {
 .news{
     padding: 20px;
     margin-bottom: 20px;
+}
+
+/* CSS ДЛЯ ЧАТА */
+#chat-hello{
+    text-align: center;
+}
+#messages{
+    width: 780px;
+    background-color: #ff00002f;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    overflow: auto; /* Чтобы добавить полосу прокрутки при переполнении */
+    word-wrap: break-word; /* Разрыв длинных слов на новые строки */
+    border: 1px solid #ccc; /* Добавляем рамку для наглядности */
+    padding: 10px;
 }
