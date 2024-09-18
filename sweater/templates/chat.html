@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+
+
+{% block title %}Chat{% endblock %}
+
+{% block body %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        var socket = io.connect('http://localhost:5000');
+
+        // Подключение к серверу
+        socket.on('connect', function() {
+            console.log("Connected to the WebSocket server");
+        });
+
+        // Загружаем последние 15 сообщений при загрузке страницы
+        $.get('/messages', function(data) {
+            data.forEach(function(message) {
+                $('#messages').append($('<p>').text(message.timestamp + ' ' + message.username + ': ' + message.text));
+            });
+        });
+
+        // Получение сообщений через WebSocket
+        socket.on('message', function(data) {
+            console.log("Received message:", data);
+            $('#messages').append($('<p>').text(data.timestamp + ' ' + data.username + ': ' + data.text));
+        });
+
+        // Отправка сообщения при нажатии на кнопку
+        $('#sendBtn').on('click', function() {
+            sendMessage();
+        });
+
+        // Отправка сообщения при нажатии на Enter
+        $('#message').keypress(function(event) {
+            if (event.which == 13) {
+                sendMessage();
+                event.preventDefault();
+            }
+        });
+
+        // Функция для отправки сообщения
+        function sendMessage() {
+            var username = $('#username').val();
+            var message = $('#message').val();
+            if (message.trim() !== '') {
+                // Отправляем объект вместо строки
+                socket.send({
+                    'username': username,
+                    'text': message
+                });
+                $('#message').val('');  // Очищаем поле ввода после отправки
+            }
+        }
+    });
+</script>
+
+<h1>HELLO</h1>
+<div id="messages"></div>
+<input type="hidden" id="username" value="{{ username }}"> <!-- Это скрытое поле для хранения имени пользователя -->
+<input type="text" id="message"  placeholder="message">
+<button id="sendBtn" type="submit">Send</button>
+{% endblock %}

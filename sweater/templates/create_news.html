@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="create_news">
+    <form method="post" enctype="multipart/form-data">
+        <input type="text" name="title" id="title" placeholder="Заголовок"><br>
+        <textarea name="text" id="text" placeholder="Введите текст новости"></textarea><br>
+        
+        <input type="submit" class="btn-btn-success" value="Отправить">
+    </form>
+</div>
+{% endblock %}

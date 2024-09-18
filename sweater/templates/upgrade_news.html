@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="create_news">
+    <form method="post" >
+        <label for="text">Заголовок</label>
+        <input type="text" name="title" id="title" placeholder="Заголовок" value="{{ new.title }}"><br>
+        <label for="text">Текст</label>
+        <textarea name="text" id="text" required>{{ new.text }}</textarea>
+        <input type="submit" class="btn-btn-success" value="Обновить">
+    </form>
+</div>
+{% endblock %}

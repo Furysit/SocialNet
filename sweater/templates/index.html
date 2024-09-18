@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block title%}
+ГЛАВНАЯ
+{% endblock%}
+{% if current_user.is_authenticated %}
+          redirect {{ url_for('main') }}
+{% endif %}
+    
+{% block body %}
+    <div class="main-page">
+        <img class="main-pic" src="/static/img/Asspergers_origin.png" alt="">
+        <form action="/login">
+            <button class="btn-main" type="submit">Вход</button>
+        </form>
+    </div>
+{% endblock %}
+
+

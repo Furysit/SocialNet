@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preload" href="{{ url_for('static', filename='img/back_light.png') }}" as="image">
+    <link rel="preload" href="{{ url_for('static', filename='img/back_dark.png') }}" as="image">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    
+    <title>{% block title %} {% endblock %}</title>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+</head>
+<body>
+    
+    
+    <div class="container">
+        {% if current_user.is_authenticated %}
+        <aside class="sidebar">
+            <ul>
+                <li><a href="{{ url_for('main') }}">Главная</a></li>
+                <li><a href="{{ url_for('chat') }}">Чат</a></li>
+                <li><a href="{{ url_for('user', user=current_user.login) }}">Профиль</a></li>
+                <li><a href="{{ url_for('setting', user=current_user.login) }}">Настройки</a></li>
+            </ul>
+                 <a href="{{ url_for('logout') }}"><button type="button" class="btn-logout">Выйти</button></a>
+        </aside>
+        {% endif %} 
+        <main class="content">
+            {% block body %}
+
+            {% endblock %}
+           
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/backgroundLoader.js') }}"></script>
+        
+
+</body>
+</html>

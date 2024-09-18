@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block body %}
+<h1>Настройки</h1>
+
+<p>Привет, <b>{{ user }}</b></p>
+
+
+<button id="toggleFormPhotoButton">Добавить|Изменить фотографию профиля</button>
+
+<div id="PhotoForm" style="display: none;">
+    <form action="{{ url_for('avatar', user = current_user.login) }}" method="post" enctype="multipart/form-data">
+        <input type="file" name="media" id="media" accept="image/*,image/gif"><br>
+        <button type="submit">Сохранить</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('toggleFormPhotoButton').addEventListener('click', function() {
+        var form = document.getElementById('PhotoForm');
+        // Проверяем текущее состояние отображения
+        if (form.style.display === 'none' || form.style.display === '') {
+            form.style.display = 'block';  // Показываем форму
+        } else {
+            form.style.display = 'none';  // Скрываем форму
+        }
+    });
+</script>
+
+<button id="toggleFormButton" >Добавить|Изменить информацию о себе</button>
+
+<div id="settingsForm" style="display: none;">
+    <form action="{{ url_for('user_info', user = current_user.login) }}" method="post">
+        <label for="birthday">Дата рождения:</label>
+        <input type="date" id="birthday" name="birthday" required><br>
+
+        <label for="sex">Пол:</label>
+        <select id="sex" name="sex" required>
+            <option value="male">Мужчина</option>
+            <option value="female">Женщина</option>
+        </select><br>
+
+        <label for="hobby">Хобби:</label>
+        <input type="text" id="hobby" name="hobby"><br>
+
+        <button type="submit">Сохранить</button>
+    </form>
+</div>
+
+<script>
+    document.getElementById('toggleFormButton').addEventListener('click', function() {
+        var form = document.getElementById('settingsForm');
+        if (form.style.display === 'none') {
+            form.style.display = 'block';  // Показываем форму
+        } else {
+            form.style.display = 'none';  // Скрываем форму
+        }
+    });
+</script>
+
+
+<button id="changeBackgroundButton">Change Background</button>
+
+
+{% block extra_head %}
+<!-- Подключаем скрипт для изменения фона только на странице Settings -->
+<script src="{{ url_for('static', filename='js/backgroundChanger.js') }}"></script>
+{% endblock %}
+
+
+{% endblock %}
+
+
+

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block body %}
+    <h1>Пользователь: {{ username }}</h1>
+
+    {% if user.media_path %}
+                {% set relative_path = user.media_path.split('flask_socialnet/')[-1].replace('\\', '/') %}
+                <img class="avatar" src="{{ url_for('static', filename=relative_path) }}" alt="Изображение новости">
+            {% endif %}
+    
+    <hr>
+    <h2>Информация</h2>
+    {% for el in user_info %}
+        <ul>
+            <li>
+                {% if el.birthday is not none %}
+                    День рождения: {{ el.birthday.strftime('%B %d, %Y') }}
+                {% else %}
+                    День рождения:Не указано
+                {% endif %}
+            </li>
+            <li>
+                Email: {{ email }}
+            </li>
+            <li>
+                {% if el.sex.value == 'male' %}
+                    Пол: Мужчина
+                {% elif el.sex.value == 'female' %}
+                    Пол: Женщина
+                {% else %}
+                    Пол не указан
+                {% endif %}
+                
+            </li>
+            <li>
+                {% if el.hobby %}
+                    Хобби: {{el.hobby}}
+                {% else %}
+                    Хобби: Не указано
+                {% endif %}
+            </li>
+        </ul>
+    {% endfor %}
+    <br>
+    <hr>
+    {% if username == current_user.login %}
+        <h2>Ваши записи</h2>
+        {% for new in news %}
+            <p>
+            <b>{{ new.title }} </b>
+            <p>{{ new.text }}</p>
+            {% if new.media_path %}
+                {% set relative_path = new.media_path.split('flask_socialnet/')[-1].replace('\\', '/') %}
+                <img class="novost_img" src="{{ url_for('static', filename=relative_path) }}" alt="Изображение новости">
+            {% endif %}
+            </p>
+            <form action="{{ url_for('delete_news', news_id=new.id) }}" method="post" style="display:inline;">
+                <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить эту новость?');">Удалить</button>
+            </form>
+        {% endfor %}
+    {% else %}
+        <h2>Записи пользователя {{ username }}</h2>
+        {% for new in news %}
+            <p>
+            <b>{{ new.title }} </b>
+            <p>{{ new.text }}</p>
+            {% if new.media_path %}
+                {% set relative_path = new.media_path.split('flask_socialnet/')[-1].replace('\\', '/') %}
+                <img class="novost_img" src="{{ url_for('static', filename=relative_path) }}" alt="Изображение новости">
+            {% endif %}
+            </p>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

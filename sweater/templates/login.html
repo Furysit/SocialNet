@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+        {% block body %}
+        <div class="login">
+            <form action="" method="post" class="form-login">
+                <h1>Войти</h1>
+                <div class="input-box">
+                    <input type="login" name="login" placeholder="Логин">
+                    <i class="bx bxs-user"></i>
+                </div>
+                <div class="input-box">
+                    <input type="password" name="password" placeholder="Пароль">
+                    <i class="bx bxs-lock-alt" ></i>
+                </div>
+                <div class="remember-forgot">
+                    <label><input type="checkbox">Запомнить меня</label>
+                    <a href="#">Забыли пароль?</a>
+                </div>
+                <button type="submit" value="login" class="btn">Войти</button>
+                <div class="register-link">
+                    <p>Нет аккаунта? <a href="{{ url_for('register') }}">Создать</a></p>
+                </div>
+            </form>
+        
+            </div>
+        {% endblock %}
+</body>
+</html>
