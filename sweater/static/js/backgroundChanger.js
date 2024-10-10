@@ -10,3 +10,4 @@ document.getElementById("changeBackgroundButton").addEventListener("click", func
     // Сразу применяем новый фон
     setBackground();
 });
+
